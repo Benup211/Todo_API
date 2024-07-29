@@ -1,20 +1,20 @@
-require('dotenv').config()
-const express=require('express')
-const app=express()
+require('dotenv').config();
+const express=require('express');
+const app=express();
 
 //middleware
-const middleware=require('./core/middleware');
+const middleware=require('./src/middleware/middleware');
 middleware(app);
 
 //router
-const globalroute=require('./core/routes');
+const globalroute=require('./src/routes/routes');
 globalroute(app);
 
-app.get('/',(req,res)=>{
-    res.status(200).json({"message":"hello world"});
+app.get('/',async(req,res)=>{
+    res.status(200).json({"message":"Hello to Todo Application"});
 });
 
-const port=process.env.PORT;
+const port=process.env.PORT||3000;
 app.listen(port,()=>{
     console.log(`Server is running in PORT:${port}`);
 });
