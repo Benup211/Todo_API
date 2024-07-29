@@ -1,0 +1,32 @@
+{
+  "name": "todo_api",
+  "version": "1.0.0",
+  "description": "todo api endpoint with user and todo model with sequelize orm",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benup211/Todo_API.git"
+  },
+  "keywords": [
+    "sequelize",
+    "api",
+    "orm",
+    "mysql"
+  ],
+  "author": "benup ghimire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Benup211/Todo_API/issues"
+  },
+  "homepage": "https://github.com/Benup211/Todo_API#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
+  }
+}
