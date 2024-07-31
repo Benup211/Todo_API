@@ -1,9 +1,0 @@
-{
-    "testing":{
-        "username":"benup",
-        "password":"12345",
-        "database":"todoDb",
-        "host":"localhost",
-        "dialect":"mysql"
-    }
-}
