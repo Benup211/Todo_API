@@ -25,13 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     status: {
       type: DataTypes.ENUM,
-      values: ['ongoing', 'completed']
+      values: ['ongoing', 'completed'],
+      defaultValue: 'ongoing',
     },
     userId: {
       type: UUID,
