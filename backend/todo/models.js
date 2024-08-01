@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate({Users}) {
       this.belongsTo(Users, {
         foreignKey: 'userId',
-        onDelete: 'cascade',
       })
     }
   }
@@ -36,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: UUID,
-      allowNull: false
+      allowNull: false,
     }
   }, {
     sequelize,

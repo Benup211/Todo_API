@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Todos}) {
       this.hasMany(Todos, {
-        foreignKey: 'userId'});  
+        foreignKey: 'userId',
+        onDelete: 'cascade',
+      });  
     }
   }
   Users.init({
