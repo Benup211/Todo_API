@@ -1,6 +1,6 @@
 const routes=(app)=>{
-    const userView=require('../../users/views');
-    const todoView=require('../../todo/views');
+    const userView=require('../../users/route');
+    const todoView=require('../../todo/route');
     app.use('/user',userView);
     app.use('/todo',todoView);
 }
