@@ -55,4 +55,22 @@ const todoUpdate=async(req,res)=>{
     }
 };
 
-module.exports={todoList,todoCreate,todoDelete,todoUpdate};
+const todoOngoing=async(req,res)=>{
+    try{
+        const todoList=await Todos.findAll({where:{userId:req.user.id,status:"ongoing"}});
+        return res.status(200).json({"Todos":todoList});
+    }catch(err){
+        return res.status(500).json({"message":"Internal Server Error"});
+    }
+};
+
+const todoCompleted=async(req,res)=>{
+    try{
+        const todoList=await Todos.findAll({where:{userId:req.user.id,status:"completed"}});
+        return res.status(200).json({"Todos":todoList});
+    }catch(err){
+        return res.status(500).json({"message":"Internal Server Error"});
+    }
+};
+
+module.exports={todoList,todoCreate,todoDelete,todoUpdate,todoOngoing,todoCompleted};
