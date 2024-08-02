@@ -1,8 +1,9 @@
 const {passwordHash,passwordCheck}=require('../src/utils/passwordUtils');
-const {Users}=require('../src/models');
+const {Users,Token}=require('../src/models');
 const {registerSchema,loginSchema,passwordChangeSchema}=require('./schema');
 const {createToken}=require('../src/utils/authToken');
-const { BelongsToMany } = require('sequelize');
+const {emailTemplateCreate}=require('../src/utils/emailTemplate');
+const {sendMail}=require('../src/utils/mail');
 
 const welcomeUser=(req,res)=>{
     res.status(200).json({"message":"user view"});
@@ -14,7 +15,10 @@ const registerUser= async (req,res)=>{
         value.password=passwordHash(value.password);
         try{
             const user=await Users.create(value);
-            res.status(201).json({"message":"user registered successfully"});
+            const token = await Token.createToken();
+            const mailOptions=await emailTemplateCreate({user,token});
+            sendMail(mailOptions);
+            res.status(201).json({"message":"Please check your email for verification link"});
         }catch(err){
             res.status(400).json({"message":"Email already registered"});
         }
@@ -62,4 +66,28 @@ const changeUserPassword=async(req,res)=>{
     res.status(400).json({"message":err.message});
   }
 };
-module.exports={welcomeUser,registerUser,loginUser,changeUserPassword};
+const activateUser=async(req,res)=>{
+  try{
+    const user=await Users.findOne({where:{id:req.params.userId}});
+    if(user){
+      const token=await Token.findOne({where:{id:req.params.tokenId}});
+      if(token){
+        if (token.validity_time>new Date(Date.now())){
+          user.active=true;
+          await user.save();
+          res.status(200).json({"message":"Account activated successfully"});
+          await token.destroy();
+        }else{
+          res.status(400).json({"message":"Token Expired"});
+        }
+      }else{
+        res.status(400).json({"message":"Invalid Token"});
+        }
+    }else{
+      res.status(400).json({"message":"Invalid User"});
+    }
+  }catch(err){
+    res.status(400).json({"message":"Invalid User or Token"});
+  }
+};
+module.exports={welcomeUser,registerUser,loginUser,changeUserPassword,activateUser};

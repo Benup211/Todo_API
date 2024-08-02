@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Todos}) {
+    static associate({ Todos }) {
       this.hasMany(Todos, {
         foreignKey: 'userId',
         onDelete: 'cascade',
-      });  
+      });
     }
   }
   Users.init({
@@ -55,7 +55,11 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Email is required"
         }
       }
-    }
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
   }, {
     sequelize,
     modelName: 'Users',
